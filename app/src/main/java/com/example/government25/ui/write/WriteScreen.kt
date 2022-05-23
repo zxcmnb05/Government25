@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.relocationRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.government25.ui.theme.SkyBlue
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -87,13 +88,6 @@ fun Content() {
             .border(1.dp, Color.Gray)
             .fillMaxWidth()
             .height(500.dp)
-            .onFocusEvent { focusState ->
-                if (focusState.isFocused) {
-                    coroutineScope.launch {
-//                        request.bringIntoView()
-                    }
-                }
-            }
     )
 }
 
@@ -102,10 +96,10 @@ fun SubmitButton() {
 
     OutlinedButton(
         onClick = { },
-        border = BorderStroke(1.dp, color = Color(0xFF0066FF)),
+        border = BorderStroke(1.dp, color = SkyBlue),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.White,
-            contentColor = Color(0xFF0066FF)
+            contentColor = SkyBlue
         ),
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))

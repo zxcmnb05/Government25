@@ -12,14 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.government25.data.model.Post
 import com.example.government25.ui.Screen
-import com.example.government25.ui.theme.NotoSansKr
+import com.example.government25.ui.theme.Gray
+import com.example.government25.ui.theme.Typography
 
 @Composable
 fun HomeScreen(navController: NavController, vm: HomeViewModel) {
@@ -32,9 +30,7 @@ fun HomeScreen(navController: NavController, vm: HomeViewModel) {
             ) {
                 Text(
                     text = "정부25",
-                    fontFamily = NotoSansKr,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                    style = Typography.h5
                 )
             }
         }
@@ -75,7 +71,7 @@ fun PostList(
 private fun PostListDivider() {
     Divider(
         modifier = Modifier.padding(horizontal = 14.dp),
-        color = Color.LightGray
+        color = Gray
     )
 }
 

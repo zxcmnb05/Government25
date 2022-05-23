@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
@@ -18,12 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.government25.ui.theme.NotoSansKr
+import com.example.government25.ui.theme.Gray
+import com.example.government25.ui.theme.SkyBlue
+import com.example.government25.ui.theme.Typography
 
 @Composable
 fun DetailScreen(
@@ -49,11 +44,7 @@ fun DetailTitle(
 ) {
     Text(
         text = title,
-        style = TextStyle(
-            fontFamily = NotoSansKr,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        ),
+        style = Typography.h4
     )
 }
 
@@ -63,18 +54,14 @@ fun DetailContent(
 ) {
     Text(
         text = content,
-        style = TextStyle(
-            fontFamily = NotoSansKr,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        )
+        style = Typography.subtitle1
     )
 }
 
 @Composable
 fun LikeButton() {
     val btn = remember { mutableStateOf(false) }
-    val btnColor = if (btn.value) Color(0xFF0066FF) else Color.Gray
+    val btnColor = if (btn.value) SkyBlue else Gray
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -85,7 +72,7 @@ fun LikeButton() {
             border = BorderStroke(1.dp, color = btnColor),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.White,
-                contentColor = Color(0xFF0066FF)
+                contentColor = SkyBlue
             ),
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(10.dp))

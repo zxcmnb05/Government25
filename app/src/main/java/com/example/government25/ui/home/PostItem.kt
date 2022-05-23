@@ -9,12 +9,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.government25.data.model.Post
-import com.example.government25.ui.theme.NotoSansKr
+import com.example.government25.ui.theme.SkyBlue
+import com.example.government25.ui.theme.Typography
 
 @Composable
 fun PostCard(
@@ -35,9 +34,7 @@ fun PostCard(
 fun PostTitle(post: Post) {
     Text(
         text = post.title,
-        fontSize = 16.sp,
-        fontFamily = NotoSansKr,
-        fontWeight = FontWeight.Normal
+        style = Typography.subtitle1
     )
 }
 
@@ -47,6 +44,6 @@ fun PostVote(post: Post) {
         modifier = Modifier.fillMaxWidth(),
         text = "${post.voteNum}명", textAlign = TextAlign.End,
         style = MaterialTheme.typography.body2,
-        color = Color(0xFF5599FF)
+        color = SkyBlue
     )
 }
