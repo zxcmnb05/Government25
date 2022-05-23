@@ -13,16 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.government25.data.model.Post
 import com.example.government25.ui.Screen
 import com.example.government25.ui.theme.NotoSansKr
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, vm: HomeViewModel) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Surface() {
@@ -99,13 +99,13 @@ val dummyPosts1 = Post(
     voteNum = 103
 )
 val dummyPosts2 = Post(
-    id = 1,
+    id = 2,
     title = "안녕하십니까 이번 대통령 출마한 손민재입니다.",
     content = "잘부탁드립니다.",
     voteNum = 103
 )
 val dummyPosts3 = Post(
-    id = 1,
+    id = 3,
     title = "안녕하십니까 이번 대통령 출마한 신중빈입니다.",
     content = "잘부탁드립니다.",
     voteNum = 103
