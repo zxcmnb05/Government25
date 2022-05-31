@@ -8,22 +8,22 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.government25.data.model.Post
 import com.example.government25.ui.theme.SkyBlue
 import com.example.government25.ui.theme.Typography
 
+
 @Composable
 fun PostCard(
     post: Post,
-    isClicked: () -> Unit
+    selectPost: (Int) -> Unit = {}
 ) {
     Column(modifier = Modifier
+        .clickable(onClick = { selectPost(post.id) })
         .fillMaxWidth()
         .padding(16.dp)
-        .clickable { isClicked() }
     ) {
         PostTitle(post)
         PostVote(post)

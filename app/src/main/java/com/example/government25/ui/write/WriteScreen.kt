@@ -1,6 +1,5 @@
 package com.example.government25.ui.write
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -12,14 +11,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.relocationRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.government25.R
 import com.example.government25.ui.theme.SkyBlue
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -48,7 +45,7 @@ fun Title(vm: WriteViewModel) {
     var titleInput by remember { (mutableStateOf("")) }
 
     TextField(
-        placeholder = { (Text(text = "청원 제목을 입력하여 주세요.")) },
+        placeholder = { (Text(text = stringResource(id = R.string.write_title))) },
         value = titleInput,
         onValueChange = { titleInput = it },
         colors = TextFieldDefaults.textFieldColors(
@@ -70,10 +67,9 @@ fun Title(vm: WriteViewModel) {
 @Composable
 fun Content() {
     var contentInput by remember { (mutableStateOf("")) }
-    val coroutineScope = rememberCoroutineScope()
 
     TextField(
-        placeholder = { (Text(text = "청원할 내용을 입력하여 주세요.")) },
+        placeholder = { (Text(text = stringResource(id = R.string.write_content))) },
         value = contentInput,
         onValueChange = { contentInput = it },
         colors = TextFieldDefaults.textFieldColors(

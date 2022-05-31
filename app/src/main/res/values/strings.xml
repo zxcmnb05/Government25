@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Government25</string>
+    <string name="app_name">정부25</string>
+
+    <string name="recent">최신순</string>
+    <string name="popular">인기순</string>
+
+    <string name="write_title">청원 제목을 입력하여 주세요.</string>
+    <string name="write_content">청원할 내용을 입력하여 주세요.</string>
 </resources>

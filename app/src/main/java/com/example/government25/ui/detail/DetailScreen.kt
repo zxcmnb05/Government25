@@ -22,6 +22,7 @@ import com.example.government25.ui.theme.Typography
 
 @Composable
 fun DetailScreen(
+    postId: Int,
     vm: DetailViewModel
 ) {
     val scrollState = rememberScrollState()
