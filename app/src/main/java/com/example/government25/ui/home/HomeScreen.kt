@@ -26,7 +26,7 @@ import com.example.government25.ui.theme.SkyBlue
 fun HomeScreen(
     vm: HomeViewModel,
     selectPost: (Int) -> Unit,
-    selectWrite: () -> Unit
+    clickWrite: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -35,12 +35,12 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background
             )
         },
-        content = { HomeContent(vm, selectPost, selectWrite) }
+        content = { HomeContent(vm, selectPost, clickWrite) }
     )
 }
 
 @Composable
-fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, selectWrite: () -> Unit) {
+fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, clickWrite: () -> Unit) {
     val tabs = listOf(stringResource(id = R.string.recent), stringResource(id = R.string.popular))
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -69,7 +69,7 @@ fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, selectWrite: () ->
             )
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
                 WriteButton(
-                    onClick = { selectWrite() }
+                    onClick = { clickWrite() }
                 )
             }
         }

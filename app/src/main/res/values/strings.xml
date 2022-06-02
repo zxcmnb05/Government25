@@ -6,4 +6,8 @@
 
     <string name="write_title">청원 제목을 입력하여 주세요.</string>
     <string name="write_content">청원할 내용을 입력하여 주세요.</string>
+
+    <string name="login_id">ID를 입력해주세요.</string>
+    <string name="login_pw">PW를 입력해주세요.</string>
+    <string name="login">Login</string>
 </resources>

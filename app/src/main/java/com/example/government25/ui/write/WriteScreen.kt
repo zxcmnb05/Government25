@@ -34,7 +34,7 @@ fun WriteScreen(vm: WriteViewModel) {
     ) {
         Title(vm)
         Spacer(modifier = Modifier.height(16.dp))
-        Content()
+        Content(vm)
         Spacer(modifier = Modifier.height(16.dp))
         SubmitButton()
     }
@@ -42,12 +42,10 @@ fun WriteScreen(vm: WriteViewModel) {
 
 @Composable
 fun Title(vm: WriteViewModel) {
-    var titleInput by remember { (mutableStateOf("")) }
-
     TextField(
         placeholder = { (Text(text = stringResource(id = R.string.write_title))) },
-        value = titleInput,
-        onValueChange = { titleInput = it },
+        value = vm.title.value,
+        onValueChange = { vm.onTitleChange(it) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
@@ -65,13 +63,11 @@ fun Title(vm: WriteViewModel) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Content() {
-    var contentInput by remember { (mutableStateOf("")) }
-
+fun Content(vm: WriteViewModel) {
     TextField(
         placeholder = { (Text(text = stringResource(id = R.string.write_content))) },
-        value = contentInput,
-        onValueChange = { contentInput = it },
+        value = vm.content.value,
+        onValueChange = { vm.onContentChange(it) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
