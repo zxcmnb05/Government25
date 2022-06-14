@@ -3,8 +3,12 @@ package com.example.government25.ui.home
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.example.government25.data.model.Post
+import com.example.government25.data.repository.PostRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel() : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val postRepository: PostRepository) : ViewModel() {
     var selectTab by mutableStateOf(0)
 
     var postData = mutableStateListOf<Post>()

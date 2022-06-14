@@ -4,8 +4,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor() : ViewModel() {
     private val _id: MutableState<String> = mutableStateOf("")
     val id: State<String> get() = _id
 
@@ -13,7 +16,7 @@ class LoginViewModel : ViewModel() {
     val pw: State<String> get() = _pw
 
     fun login() {
-        if (id.value.isNullOrBlank() || pw.value.isNullOrBlank()) {
+        if (id.value.isBlank() || pw.value.isBlank()) {
             // Todo Error message
         } else {
             // Todo 서버통신

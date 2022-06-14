@@ -2,8 +2,12 @@ package com.example.government25.ui.write
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import com.example.government25.data.repository.PostRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class WriteViewModel : ViewModel() {
+@HiltViewModel
+class WriteViewModel @Inject constructor(postRepository: PostRepository) : ViewModel() {
     private val _title: MutableState<String> = mutableStateOf("")
     val title: State<String> get() = _title
 

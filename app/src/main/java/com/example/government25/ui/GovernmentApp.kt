@@ -1,20 +1,17 @@
 package com.example.government25.ui
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.government25.ui.detail.DetailScreen
-import com.example.government25.ui.detail.DetailViewModel
 import com.example.government25.ui.home.HomeScreen
-import com.example.government25.ui.home.HomeViewModel
 import com.example.government25.ui.login.LoginScreen
-import com.example.government25.ui.login.LoginViewModel
 import com.example.government25.ui.theme.Government25Theme
 import com.example.government25.ui.write.WriteScreen
-import com.example.government25.ui.write.WriteViewModel
 
 @Composable
 fun GovernmentApp() {
@@ -23,7 +20,7 @@ fun GovernmentApp() {
         NavHost(navController = navController, startDestination = Screen.Login.route) {
             composable(Screen.Home.route) {
                 HomeScreen(
-                    vm = HomeViewModel(),
+                    vm = hiltViewModel(),
                     selectPost = {
                         navController.navigate("${Screen.Detail.route}/$it")
                     },
@@ -33,7 +30,7 @@ fun GovernmentApp() {
                 )
             }
             composable(Screen.Write.route) {
-                WriteScreen(vm = WriteViewModel())
+                WriteScreen(vm = hiltViewModel())
             }
             composable(
                 route = Screen.Detail.routeWithArgument,
@@ -44,12 +41,14 @@ fun GovernmentApp() {
                 val postId =
                     it.arguments?.getInt(Screen.Detail.argument) ?: return@composable
 
-                DetailScreen(postId = postId, vm = DetailViewModel())
+                DetailScreen(postId = postId, vm = hiltViewModel())
             }
             composable(Screen.Login.route) {
-                LoginScreen(vm = LoginViewModel(),
+                LoginScreen(vm = hiltViewModel(),
                     clickLogin = {
-                        navController.navigate(Screen.Home.route)
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
                     }
                 )
             }
