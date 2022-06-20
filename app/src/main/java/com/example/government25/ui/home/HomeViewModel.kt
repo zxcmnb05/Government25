@@ -1,46 +1,53 @@
 package com.example.government25.ui.home
 
-import androidx.compose.runtime.*
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.government25.data.model.Post
+import androidx.lifecycle.viewModelScope
+import com.example.government25.data.database.entity.PostEntity
 import com.example.government25.data.repository.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val postRepository: PostRepository) : ViewModel() {
-    var selectTab by mutableStateOf(0)
+    private val _isRefreshing = MutableStateFlow(false)
 
-    var postData = mutableStateListOf<Post>()
-        private set
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
 
-    var recentData = mutableStateListOf<Post>()
-        private set
-    var popularData = mutableStateListOf<Post>()
-        private set
+    private val _postList = MutableStateFlow<List<PostEntity>>(emptyList())
+    val postList = _postList.asStateFlow()
+
 
     init {
-        recentData.add(Post(1, "최신순1", "최신순 1번입니다", 11))
-        recentData.add(Post(2, "최신순2", "최신순 2번입니다", 12))
-        recentData.add(Post(3, "최신순3", "최신순 3번입니다", 13))
-
-        popularData.add(Post(1, "인기순1", "인기순 1번입니다", 21))
-        popularData.add(Post(2, "인기순2", "인기순 2번입니다", 22))
-        popularData.add(Post(3, "인기순3", "인기순 3번입니다", 23))
-
-        postData.addAll(recentData)
+        getData()
     }
 
-    fun syncData() {
-        when (selectTab) {
-            0 -> {
-                postData.clear()
-                postData.addAll(recentData)
-            }
-            1 -> {
-                postData.clear()
-                postData.addAll(popularData)
-            }
+    fun onRefresh() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            getData()
+            _isRefreshing.emit(false)
+        }
+    }
+
+    private fun getData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            postRepository.getAllPost().distinctUntilChanged()
+                .collect() {
+                    if (it.isEmpty()) {
+                        Log.e("Empty ", ": Empty List")
+                    } else {
+                        _postList.value = it
+                        Log.e("Data", postList.value.toString())
+                    }
+                }
         }
     }
 }

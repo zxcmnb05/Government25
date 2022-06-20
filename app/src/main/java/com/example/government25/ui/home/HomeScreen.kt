@@ -1,26 +1,26 @@
 package com.example.government25.ui.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.government25.R
-import com.example.government25.data.model.Post
 import com.example.government25.ui.theme.Gray
-import com.example.government25.ui.theme.SkyBlue
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeScreen(
@@ -35,16 +35,24 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background
             )
         },
-        content = { HomeContent(vm, selectPost, clickWrite) }
+        content = { HomeContent(vm, selectPost, clickWrite, it) }
     )
 }
 
 @Composable
-fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, clickWrite: () -> Unit) {
-    val tabs = listOf(stringResource(id = R.string.recent), stringResource(id = R.string.popular))
-    Column(modifier = Modifier.fillMaxSize()) {
+fun HomeContent(
+    vm: HomeViewModel,
+    selectPost: (Int) -> Unit,
+    clickWrite: () -> Unit,
+    contentPadding: PaddingValues
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+    ) {
 
-        TabRow(
+        /*TabRow(
             selectedTabIndex = vm.selectTab,
             backgroundColor = MaterialTheme.colors.background,
             contentColor = SkyBlue
@@ -57,15 +65,16 @@ fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, clickWrite: () -> 
                     Text(text = tab, modifier = Modifier.padding(16.dp))
                 }
             }
-        }
+        }*/
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
         ) {
             PostList(
-                posts = vm.postData,
+                vm = vm,
                 selectPost = { selectPost(it) }
+
             )
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
                 WriteButton(
@@ -76,21 +85,29 @@ fun HomeContent(vm: HomeViewModel, selectPost: (Int) -> Unit, clickWrite: () -> 
     }
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun PostList(
-    posts: List<Post>,
+    vm: HomeViewModel,
     selectPost: (Int) -> Unit
 ) {
-    LazyColumn() {
-        item {
-            Column {
-                posts.forEach { post ->
-                    PostCard(post, selectPost)
-                    PostListDivider()
+    val isRefresh by vm.isRefreshing.collectAsState()
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefresh),
+        onRefresh = { vm.onRefresh() }) {
+
+        LazyColumn() {
+            item {
+                Column {
+                    vm.postList.value.forEach { post ->
+                        PostCard(post, selectPost)
+                        PostListDivider()
+                    }
                 }
             }
         }
     }
+
 }
 
 @Composable
