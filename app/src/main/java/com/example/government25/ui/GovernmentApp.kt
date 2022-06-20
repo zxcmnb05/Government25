@@ -1,5 +1,6 @@
 package com.example.government25.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -13,6 +14,7 @@ import com.example.government25.ui.login.LoginScreen
 import com.example.government25.ui.theme.Government25Theme
 import com.example.government25.ui.write.WriteScreen
 
+@ExperimentalFoundationApi
 @Composable
 fun GovernmentApp() {
     Government25Theme {
@@ -30,7 +32,14 @@ fun GovernmentApp() {
                 )
             }
             composable(Screen.Write.route) {
-                WriteScreen(vm = hiltViewModel())
+                WriteScreen(
+                    vm = hiltViewModel(),
+                    clickWrite = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Write.route) { inclusive = true }
+                        }
+                    }
+                )
             }
             composable(
                 route = Screen.Detail.routeWithArgument,

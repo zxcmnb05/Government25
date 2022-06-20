@@ -1,5 +1,7 @@
 package com.example.government25.ui.write
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -7,20 +9,22 @@ import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.government25.R
 import com.example.government25.ui.theme.SkyBlue
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 @Composable
-fun WriteScreen(vm: WriteViewModel) {
+fun WriteScreen(vm: WriteViewModel, clickWrite: () -> Unit) {
     val scrollState = rememberScrollState()
     val request = remember { BringIntoViewRequester() }
 
@@ -36,14 +40,14 @@ fun WriteScreen(vm: WriteViewModel) {
         Spacer(modifier = Modifier.height(16.dp))
         Content(vm)
         Spacer(modifier = Modifier.height(16.dp))
-        SubmitButton()
+        SubmitButton(vm, clickWrite)
     }
 }
 
 @Composable
 fun Title(vm: WriteViewModel) {
     TextField(
-        placeholder = { (Text(text = stringResource(id = R.string.write_title))) },
+        label = { (Text(text = stringResource(id = R.string.write_title))) },
         value = vm.title.value,
         onValueChange = { vm.onTitleChange(it) },
         colors = TextFieldDefaults.textFieldColors(
@@ -57,11 +61,11 @@ fun Title(vm: WriteViewModel) {
         modifier = Modifier
             .border(1.dp, Color.Black)
             .fillMaxWidth()
+            .height(60.dp)
     )
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Content(vm: WriteViewModel) {
     TextField(
@@ -84,10 +88,18 @@ fun Content(vm: WriteViewModel) {
 }
 
 @Composable
-fun SubmitButton() {
+fun SubmitButton(vm: WriteViewModel, clickWrite: () -> Unit) {
+    val context = LocalContext.current
 
     OutlinedButton(
-        onClick = { },
+        onClick = {
+            if (vm.title.value.isNotBlank() || vm.content.value.isNotBlank()) {
+                vm.onWriteBtn()
+                clickWrite()
+            } else {
+                toastMessage(context)
+            }
+        },
         border = BorderStroke(1.dp, color = SkyBlue),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.White,
@@ -95,8 +107,13 @@ fun SubmitButton() {
         ),
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
-            .padding(16.dp)
+            .padding(vertical = 16.dp),
+        contentPadding = PaddingValues(vertical = 4.dp, horizontal = 16.dp)
     ) {
         Text(text = "작성하기")
     }
+}
+
+fun toastMessage(context: Context) {
+    Toast.makeText(context, "제목, 내용을 적어주세요", Toast.LENGTH_SHORT).show()
 }
