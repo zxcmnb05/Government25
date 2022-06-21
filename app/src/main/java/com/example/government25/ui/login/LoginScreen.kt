@@ -1,5 +1,6 @@
 package com.example.government25.ui.login
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +11,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -33,7 +35,6 @@ fun LoginScreen(vm: LoginViewModel, clickLogin: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Id(vm: LoginViewModel) {
 
@@ -80,12 +81,20 @@ fun Pw(vm: LoginViewModel) {
 
 @Composable
 fun Login(vm: LoginViewModel, clickLogin: () -> Unit) {
+    val context = LocalContext.current
+
     Button(
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
             .fillMaxWidth()
             .height(55.dp),
-        onClick = { clickLogin() },
+        onClick = {
+            if (vm.id.value.isBlank() || vm.pw.value.isBlank()) {
+                Toast.makeText(context, "ID, PW를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                clickLogin()
+            }
+        },
         colors = ButtonDefaults.buttonColors(SkyBlue)
     ) {
         Text(text = stringResource(R.string.login), color = Color.White)

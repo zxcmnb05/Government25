@@ -97,7 +97,7 @@ fun SubmitButton(vm: WriteViewModel, clickWrite: () -> Unit) {
                 vm.onWriteBtn()
                 clickWrite()
             } else {
-                toastMessage(context)
+                Toast.makeText(context, "제목, 내용을 적어주세요", Toast.LENGTH_SHORT).show()
             }
         },
         border = BorderStroke(1.dp, color = SkyBlue),
@@ -112,8 +112,4 @@ fun SubmitButton(vm: WriteViewModel, clickWrite: () -> Unit) {
     ) {
         Text(text = "작성하기")
     }
-}
-
-fun toastMessage(context: Context) {
-    Toast.makeText(context, "제목, 내용을 적어주세요", Toast.LENGTH_SHORT).show()
 }

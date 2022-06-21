@@ -26,18 +26,18 @@ class HomeViewModel @Inject constructor(private val postRepository: PostReposito
 
 
     init {
-        getData()
+        getPosts()
     }
 
     fun onRefresh() {
         viewModelScope.launch {
             _isRefreshing.emit(true)
-            getData()
+            getPosts()
             _isRefreshing.emit(false)
         }
     }
 
-    private fun getData() {
+    private fun getPosts() {
         viewModelScope.launch(Dispatchers.IO) {
             postRepository.getAllPost().distinctUntilChanged()
                 .collect() {

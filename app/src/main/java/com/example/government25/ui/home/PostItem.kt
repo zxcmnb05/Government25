@@ -26,7 +26,7 @@ fun PostCard(
         .padding(16.dp)
     ) {
         PostTitle(post)
-        PostVote(post)
+//        PostVote(post)
     }
 }
 
@@ -37,6 +37,7 @@ fun PostTitle(post: PostEntity) {
         style = Typography.subtitle1
     )
 }
+/*
 
 @Composable
 fun PostVote(post: PostEntity) {
@@ -46,4 +47,4 @@ fun PostVote(post: PostEntity) {
         style = MaterialTheme.typography.body2,
         color = SkyBlue
     )
-}
+}*/

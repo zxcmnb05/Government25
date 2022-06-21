@@ -51,21 +51,6 @@ fun HomeContent(
             .fillMaxSize()
             .padding(contentPadding)
     ) {
-
-        /*TabRow(
-            selectedTabIndex = vm.selectTab,
-            backgroundColor = MaterialTheme.colors.background,
-            contentColor = SkyBlue
-        ) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(selected = vm.selectTab == index, onClick = {
-                    vm.selectTab = index
-                    vm.syncData()
-                }) {
-                    Text(text = tab, modifier = Modifier.padding(16.dp))
-                }
-            }
-        }*/
         Box(
             modifier = Modifier
                 .fillMaxSize()

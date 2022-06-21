@@ -15,14 +15,6 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private val _pw: MutableState<String> = mutableStateOf("")
     val pw: State<String> get() = _pw
 
-    fun login() {
-        if (id.value.isBlank() || pw.value.isBlank()) {
-            // Todo Error message
-        } else {
-            // Todo 서버통신
-        }
-    }
-
     fun onIdChange(id: String) {
         _id.value = id
     }
