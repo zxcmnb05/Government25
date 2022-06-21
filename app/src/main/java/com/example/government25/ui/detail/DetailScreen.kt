@@ -1,5 +1,6 @@
 package com.example.government25.ui.detail
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,12 +21,14 @@ import com.example.government25.ui.theme.Gray
 import com.example.government25.ui.theme.SkyBlue
 import com.example.government25.ui.theme.Typography
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun DetailScreen(
     postId: Int,
     vm: DetailViewModel
 ) {
     val scrollState = rememberScrollState()
+    vm.getPost(postId)
 
     Column(
         modifier = Modifier
@@ -33,8 +36,8 @@ fun DetailScreen(
             .padding(16.dp)
             .verticalScroll(scrollState)
     ) {
-        DetailTitle(title = "기숙사 4층 너무 시끄러워요")
-        DetailContent(content = "요즘 기숙사 4층 너무 시끄러워요. 자치위원분들 4층 단속 철저하게 해주셨으면 합니다.")
+        DetailTitle(title = vm.post.value.postTitle)
+        DetailContent(content = vm.post.value.postContent)
         LikeButton()
     }
 }
